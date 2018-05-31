@@ -1,0 +1,23 @@
+micronaut:
+    application:
+        name: movie-service
+    server:
+        port: 8080
+
+router:
+    static:
+        resources:
+            enabled: true
+            mapping: /static/**
+            paths: classpath:static
+jackson:
+    serialization:
+        indentOutput: true
+    serialization-inclusion: NON_NULL
+
+datasources:
+    default:
+        url: jdbc:h2:mem:test
+        username: sa
+        password: ""
+        driverClassName: org.h2.Driver

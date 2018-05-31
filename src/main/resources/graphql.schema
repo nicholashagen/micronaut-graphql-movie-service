@@ -1,0 +1,34 @@
+type Query {
+    movies : [Movie]
+    actors : [Actor]
+}
+
+type Movie {
+    id : String!
+    name : String
+    category : Category
+    duration : Int
+    description : String
+    director : Director
+    actors : [Actor]
+}
+
+type Category {
+    id : String!
+    name : String
+    description : String
+}
+
+type Director {
+    id : String!
+    firstName : String
+    lastName : String
+    directedMovies : [Movie]
+}
+
+type Actor {
+    id : String!
+    firstName : String
+    lastName : String
+    actedInMovies : [Movie]
+}

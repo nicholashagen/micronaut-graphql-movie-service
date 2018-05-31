@@ -1,0 +1,5 @@
+profile: service
+defaultPackage: com.znetdevelopment.movies
+---
+testFramework: junit
+sourceLanguage: java
