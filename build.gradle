@@ -1,25 +1,14 @@
-buildscript {
-    repositories {
-        mavenCentral()
-        maven { url "https://plugins.gradle.org/m2/" }
-    }
-    dependencies {
-        classpath "com.github.jengelman.gradle.plugins:shadow:2.0.4"
-        classpath "io.spring.gradle:dependency-management-plugin:1.0.5.RELEASE"
-        classpath "net.ltgt.gradle:gradle-apt-plugin:0.15"
-    }
+plugins {
+    id "io.spring.dependency-management" version "1.0.6.RELEASE"
+    id "com.github.johnrengelman.shadow" version "4.0.2"
+    // id "net.ltgt.apt" version "0.19" // not needed after gradle 4.3
 }
 
 version "0.1"
 group "com.znetdevelopment.movies"
 
-apply plugin:"io.spring.dependency-management"
-apply plugin:"com.github.johnrengelman.shadow"
 apply plugin:"application"
 apply plugin:"java"
-apply plugin:"net.ltgt.apt-eclipse"
-apply plugin:"net.ltgt.apt-idea"
-
 
 repositories {
     mavenLocal()
@@ -29,28 +18,34 @@ repositories {
 
 dependencyManagement {
     imports {
-        mavenBom 'io.micronaut:bom:1.0.0-SNAPSHOT'
+        mavenBom 'io.micronaut:micronaut-bom:1.0.1'
     }
 }
 
 dependencies {
-    annotationProcessor "io.micronaut:inject-java"
-    compile "io.micronaut:http-client"
-    compile "io.micronaut:http-server-netty"
-    compile "io.micronaut:inject"
-    compile "io.micronaut:runtime"
-    compileOnly "io.micronaut:inject-java"
-    runtime "ch.qos.logback:logback-classic:1.2.3"
-    testCompile "junit:junit:4.12"
-    testCompile "io.micronaut:inject-java"
+    annotationProcessor "io.micronaut:micronaut-inject-java"
+
+    compile "io.micronaut:micronaut-http-client"
+    compile "io.micronaut:micronaut-http-server-netty"
+    compile "io.micronaut:micronaut-inject"
+    compile "io.micronaut:micronaut-runtime"
+    compile "io.micronaut:micronaut-management"
+    compile "io.micronaut.configuration:micronaut-jdbc-tomcat"
+
     compile "com.graphql-java:graphql-java:8.0"
-    compile "io.micronaut.configuration:jdbc-tomcat"
     compile "com.h2database:h2:1.4.196"
-    compile 'org.hsqldb:sqltool:2.3.3'
+    compile "org.hsqldb:sqltool:2.3.3"
+
+    compileOnly "io.micronaut:micronaut-inject-java"
+    runtime "ch.qos.logback:logback-classic:1.2.3"
 }
 
 shadowJar {
     mergeServiceFiles()
+}
+
+wrapper {
+    gradleVersion = '5.0'
 }
 
 mainClassName = "com.znetdevelopment.movies.Application"
